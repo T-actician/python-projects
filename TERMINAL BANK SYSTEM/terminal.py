@@ -1,4 +1,133 @@
-#================TERMINAL BAKNK SYSTEM REDONE======================
+#================TERMINAL BANK SYSTEM WITH FUNCTIONS=========
+
+balance = 1000
+transactions = []
+running = True
+user_pin = 1234
+trials = 3
+
+    
+menu ={
+    "1.": "Deposit",
+    "2.": "Withdraw",
+    "3.": "Check Balance",
+    "4.": "Transaction History",
+    "5.": "Exit"    
+}
+
+
+def login():
+    global trials
+    while trials > 0:
+        try:
+            pin = int(input("⚡Enter your PIN to transact: "))
+            if pin == user_pin:
+                return True
+            else:
+                trials -= 1
+
+                if trials > 0:
+                    print(f"Incorrect PIN. Trials remaining: {trials}")
+
+                else:
+                    print("Too many attempts. Access denied!")
+        except ValueError:
+            print("Invalid PIN!")
+    return False     
+        
+
+def show_menu():
+    for key, value in menu.items():
+        print(f"{key} {value}")   
+         
+def deposit():
+    global balance
+    try:
+        amount = float(input("⚡Enter the amount to deposit: "))
+        if amount == 0:
+            print("Amount cannot be 0!")
+        elif amount < 0:
+            print("You cannot deposit a negative figure!")
+        else:
+            balance += amount
+            print(f"{amount} deposited successfully. Your new bank balance is {balance}")
+            transactions.append(f"Deposited: {amount}")
+    except ValueError:
+        print("Invalid Ammount! Only numbers accepted.")
+
+def withdraw():
+    global balance
+    try:
+        amount = float(input("⚡Enter the amount to withdraw: "))
+        if amount == 0:
+            print("Amount cannot be 0!")
+        elif amount < 0:
+            print("You cannot withdraw a negative figure!")
+        elif amount > balance:
+            print(f"Failed to withdraw {amount}. Your Bank account balance is {balance}")          
+        else:
+            balance -= amount
+            print(f"{amount} deposited successfully. Your new bank balance is {balance}")
+            transactions.append(f"Withdrew: {amount}")
+            
+    except ValueError:
+        print("Invalid Ammount! Only numbers accepted.")
+
+def check_balance():
+    print(f"Your account Balance is {balance}")
+
+def show_transactions():
+    if len(transactions) == 0:
+        print("=========TRANSACTIONS==========")
+        print("No Transactions Yet!")
+        print("=================================")
+
+    else:
+        print("=========TRANSACTIONS==========")
+        for transaction in transactions:
+            print(transaction)
+        print("=================================")
+        
+
+
+print("============TACTICIANS BANK=========")
+
+if login():
+
+    while running:
+
+        show_menu()
+
+        choice = input("⚡Pick a service: ")
+
+        if choice == "1":
+            deposit()
+
+        elif choice == "2":
+            withdraw()
+
+        elif choice == "3":
+            check_balance()
+
+        elif choice == "4":
+            show_transactions()
+
+        elif choice == "5":
+            if len(transactions) == 0:
+                print("==========You're Welcome to transact with us!==========")
+                running = False
+
+            else:
+                print("======= THANK YOU FOR BANKING WITH US =======")
+                running = False
+
+        else:
+            print("Invalid choice!")      
+
+
+
+
+#================TERMINAL BAKNK SYSTEM 1 No FUNCTIONS======================
 
 balance = 1000
 transactions = []
